@@ -10,7 +10,8 @@ const {
 	RECHARGE_AMOUNT_IS_REQUIRED,
 	CDK_IS_REQUIRED,
 	CDK_IS_INVALID,
-  CDK_IS_EXPIRED,
+	CDK_IS_EXPIRED,
+	STADIUMID_IS_REQUIRED,
 } = require('./errorTypes');
 
 // 所有在服务器发生的错误都会被捕捉到,在捕捉的地方更改返回的状态码和信息
@@ -55,10 +56,14 @@ const errorHandler = (error, ctx) => {
 			status = 400;
 			message = CDK_IS_INVALID;
 			break;
-    case CDK_IS_EXPIRED:
-      status = 400;
-      message =  CDK_IS_EXPIRED;
-      break;
+		case CDK_IS_EXPIRED:
+			status = 400;
+			message = CDK_IS_EXPIRED;
+			break;
+		case STADIUMID_IS_REQUIRED:
+			status = 400;
+			message = STADIUMID_IS_REQUIRED;
+			break;
 		default:
 			console.log('nothing is matched');
 	}

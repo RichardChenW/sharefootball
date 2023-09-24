@@ -9,6 +9,7 @@ const RECHARGE_AMOUNT_IS_REQUIRED = 'recharge_amount_is_required';
 const CDK_IS_REQUIRED = 'cdk_is_required';
 const CDK_IS_INVALID = 'cdk_is_invalid';
 const CDK_IS_EXPIRED = 'cdk_is_expired';
+const STADIUMID_IS_REQUIRED = 'stadiumId_is_required';
 
 module.exports = {
 	NAME_AND_PASSWORD_IS_REQUIRED,
@@ -21,4 +22,5 @@ module.exports = {
 	CDK_IS_REQUIRED,
 	CDK_IS_INVALID,
 	CDK_IS_EXPIRED,
+  STADIUMID_IS_REQUIRED
 };
