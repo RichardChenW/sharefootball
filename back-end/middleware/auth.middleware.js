@@ -13,7 +13,7 @@ const verifyAuth = async (ctx, next) => {
 	// 如果有捕获的token无法解析
 	let userInfo;
 	try {
-		userInfo = tokenParse(token); // eg: { id: 3, name: 'richard', iat: 1695404963, exp: 1695491363 }
+		userInfo = tokenParse(token); // eg: { id: 3, name: 'richard',amount: '4000.00',, iat: 1695404963, exp: 1695491363 }
 	} catch (error) {
 		ctx.app.emit('error', new Error(TOKEN_IS_INVALID), ctx);
 		return;

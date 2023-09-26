@@ -10,7 +10,7 @@ class RechargeService {
 			userId,
 			status,
 		]);
-    return res
+		return res;
 	}
 }
 
