@@ -1,19 +1,10 @@
-const orderService = require('../service/order.service');
+const questionService = require('../service/question.service');
 
-// (async () => {
-// 	const res = await orderService.getList(3);
-// 	console.log(res);
-//   return;
-// })();
-
-const func = async () => {
-	const res = await orderService.getList(3);
+const testSql = async () => {
+	const res = await questionService.list();
 	console.log(res);
-	return;
 };
 
-func().then(()=>{
-  process.exit()
+testSql().then(() => {
+	process.exit();
 });
-
-console.log('hello world');
