@@ -12,9 +12,10 @@ const {
 	CDK_IS_INVALID,
 	CDK_IS_EXPIRED,
 	STADIUMID_IS_REQUIRED,
-  ORDER_NUMBER_IS_REQUIRED,
-  ORDER_NUMBER_IS_INVALID,
-  ORDER_STATUS_IS_ZERO
+	ORDER_NUMBER_IS_REQUIRED,
+	ORDER_NUMBER_IS_INVALID,
+	ORDER_STATUS_IS_ZERO,
+	AVATR_IS_REQUIRED,
 } = require('./errorTypes');
 
 // 所有在服务器发生的错误都会被捕捉到,在捕捉的地方更改返回的状态码和信息
@@ -67,18 +68,22 @@ const errorHandler = (error, ctx) => {
 			status = 400;
 			message = STADIUMID_IS_REQUIRED;
 			break;
-    case ORDER_NUMBER_IS_REQUIRED:
-      status = 400;
-      message = ORDER_NUMBER_IS_REQUIRED;
-      break;
-    case ORDER_NUMBER_IS_INVALID:
-      status = 400;
-      message = ORDER_NUMBER_IS_INVALID;
-      break;
-    case ORDER_STATUS_IS_ZERO:
-      status = 400;
-      message = ORDER_STATUS_IS_ZERO;
-      break;
+		case ORDER_NUMBER_IS_REQUIRED:
+			status = 400;
+			message = ORDER_NUMBER_IS_REQUIRED;
+			break;
+		case ORDER_NUMBER_IS_INVALID:
+			status = 400;
+			message = ORDER_NUMBER_IS_INVALID;
+			break;
+		case ORDER_STATUS_IS_ZERO:
+			status = 400;
+			message = ORDER_STATUS_IS_ZERO;
+			break;
+		case AVATR_IS_REQUIRED:
+			status = 400;
+			message = AVATR_IS_REQUIRED;
+			break;
 		default:
 			console.log('nothing is matched');
 	}

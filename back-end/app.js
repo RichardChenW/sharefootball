@@ -14,6 +14,8 @@ const rechargeRouter = require('./router/recharge.router');
 const cdkRouter = require('./router/cdk.router');
 const orderRouter = require('./router/order.router');
 const questionRouter = require('./router/question.router');
+const uploadRouter = require('./router/upload.router');
+const fileRouter = require('./router/file.router')
 
 const app = new Koa();
 
@@ -43,6 +45,11 @@ app.use(orderRouter.allowedMethods());
 // 注册订单问题列表
 app.use(questionRouter.routes());
 app.use(questionRouter.allowedMethods());
+// 注册上传路由
+app.use(uploadRouter.routes());
+app.use(uploadRouter.allowedMethods());
+app.use(fileRouter.routes());
+app.use(fileRouter.allowedMethods());
 
 app.use((ctx, next) => {
 	ctx.body = 'Hello Koa!';

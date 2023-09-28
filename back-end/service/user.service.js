@@ -6,7 +6,7 @@ class UserService {
 		const [res] = await connection.execute(statment, [userName]);
 		return res;
 	}
-  async getUserInfoById(id) {
+	async getUserInfoById(id) {
 		const statment = 'SELECT * FROM USER WHERE `id` = ?';
 		const [res] = await connection.execute(statment, [id]);
 		return res;
@@ -21,6 +21,13 @@ class UserService {
 	async updateUserAmount(amount, id) {
 		const statement = 'UPDATE `user` SET amount = ? WHERE id = ?';
 		const [result] = await connection.execute(statement, [amount, id]);
+		return result;
+	}
+	// 更新用户头像
+	async updateUserAvayar(avatar, id) {
+		const statement = 'UPDATE `user` SET avatar = ? WHERE id = ?';
+		const [result] = await connection.execute(statement, [avatar, id]);
+		return result;
 	}
 }
 

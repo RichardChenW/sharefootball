@@ -11,8 +11,9 @@ const CDK_IS_INVALID = 'cdk_is_invalid';
 const CDK_IS_EXPIRED = 'cdk_is_expired';
 const STADIUMID_IS_REQUIRED = 'stadiumId_is_required';
 const ORDER_NUMBER_IS_REQUIRED = 'order_number_is_required';
-const ORDER_NUMBER_IS_INVALID ='order_number_is_invalid';
+const ORDER_NUMBER_IS_INVALID = 'order_number_is_invalid';
 const ORDER_STATUS_IS_ZERO = 'order_status_is_zero';
+const AVATR_IS_REQUIRED = 'avatar_is_required';
 
 module.exports = {
 	NAME_AND_PASSWORD_IS_REQUIRED,
@@ -25,8 +26,9 @@ module.exports = {
 	CDK_IS_REQUIRED,
 	CDK_IS_INVALID,
 	CDK_IS_EXPIRED,
-  STADIUMID_IS_REQUIRED,
-  ORDER_NUMBER_IS_REQUIRED,
-  ORDER_NUMBER_IS_INVALID,
-  ORDER_STATUS_IS_ZERO
+	STADIUMID_IS_REQUIRED,
+	ORDER_NUMBER_IS_REQUIRED,
+	ORDER_NUMBER_IS_INVALID,
+	ORDER_STATUS_IS_ZERO,
+	AVATR_IS_REQUIRED,
 };
