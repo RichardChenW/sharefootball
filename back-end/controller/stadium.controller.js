@@ -5,10 +5,11 @@ class StadiumController {
 		if (ctx.query.id) {
 			const stadiumList = await StadiumService.queryList(ctx.query.id);
 			ctx.body = stadiumList;
-      return
+			return;
 		}
-    const stadiumList = await StadiumService.list();
-    ctx.body = stadiumList;
+		const stadiumList = await StadiumService.list();
+		ctx.body = stadiumList;
+		await next();
 	}
 }
 

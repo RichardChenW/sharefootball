@@ -1,5 +1,6 @@
 // 创建错误处理的中间件
 
+const { wrapperMiddleware } = require('../middleware/wrapper.middleware');
 const {
 	NAME_AND_PASSWORD_IS_REQUIRED,
 	USER_NAME_IS_EXISTENT,
@@ -19,7 +20,7 @@ const {
 } = require('./errorTypes');
 
 // 所有在服务器发生的错误都会被捕捉到,在捕捉的地方更改返回的状态码和信息
-const errorHandler = (error, ctx) => {
+const errorHandler = async (error, ctx) => {
 	let status = 200;
 	let message = 'success';
 
@@ -90,6 +91,8 @@ const errorHandler = (error, ctx) => {
 
 	ctx.status = status;
 	ctx.body = message;
+	ctx.message = message;
+  await wrapperMiddleware(ctx)
 };
 
 module.exports = errorHandler;

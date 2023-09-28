@@ -15,7 +15,8 @@ const cdkRouter = require('./router/cdk.router');
 const orderRouter = require('./router/order.router');
 const questionRouter = require('./router/question.router');
 const uploadRouter = require('./router/upload.router');
-const fileRouter = require('./router/file.router')
+const fileRouter = require('./router/file.router');
+const { wrapperMiddleware } = require('./middleware/wrapper.middleware');
 
 const app = new Koa();
 
@@ -50,6 +51,9 @@ app.use(uploadRouter.routes());
 app.use(uploadRouter.allowedMethods());
 app.use(fileRouter.routes());
 app.use(fileRouter.allowedMethods());
+
+// 接口数据结构处理中间件，必须放在最后，就是所有中间件跑完，会来到这
+app.use(wrapperMiddleware);
 
 app.use((ctx, next) => {
 	ctx.body = 'Hello Koa!';

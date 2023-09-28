@@ -8,7 +8,8 @@ class RegisterController {
     const passwordEncrypted = await passwordEncrypt(password);
 
     await userService.register(name,passwordEncrypted)
-		ctx.body = '注册成功！';
+		ctx.message = "注册成功"
+    await next()
 	}
 }
 
