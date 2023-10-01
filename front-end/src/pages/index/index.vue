@@ -1,8 +1,11 @@
 <script setup>
   import { ref } from 'vue';
   import { onLoad } from '@dcloudio/uni-app';
-  import { markers } from '../../pages-data';
-
+  // import { markers } from '../../pages-data';
+	// 导入统一的api
+	import api from "@/api";
+	// 测试新的markers
+	const markers = ref([])
   const userLongitude = ref(0);
   const userLatitude = ref(0);
   const currentMarker = ref(null);
@@ -30,7 +33,7 @@
       name: '个人中心',
     },
   ]);
-
+	const app = getApp();
   const handleAction = item => {
     switch (item.name) {
       case '地图搜索':
@@ -62,7 +65,7 @@
   const handleMarktap = e => {
     // 根据每个点的id找到对应的点
     const currentPoint = e.detail.markerId;
-    const currentInfo = markers.find(each => {
+    const currentInfo = markers.value.find(each => {
       return each.id === currentPoint;
     });
     currentMarker.value = currentInfo;
@@ -82,7 +85,7 @@
   // 点击非marker的区域，展示借还
   const handleIsScan = () => {
     console.log('触发事件');
-    isScan.value = true;
+    isScan.value = false;
   };
 
   // 点击去场馆
@@ -105,6 +108,21 @@
         console.log(err);
       },
     });
+		api.getStadiumList().then((res)=>{
+			if(res.data.code ===0){
+				app.globalData.markers = markers.value = res.data.data.map((item)=>{
+					return {
+						...item,
+						title:item.name,
+						width:40,
+						height:40,
+						latitude:parseFloat(item.latitude),
+						longitude:parseFloat(item.longitude),
+						iconPath: "/static/icon.png",
+					}
+				})
+			}
+		})
   });
 </script>
 

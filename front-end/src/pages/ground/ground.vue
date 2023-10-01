@@ -4,6 +4,7 @@
   import { getGroundInfoById } from '/src/pages-data/index.js';
 
   const currentfootBallInfo = ref(null);
+	const app = getApp()
 
   // 导航去对应的球场
   const handleNavTo = () => {
@@ -26,7 +27,16 @@
 
   onLoad(options => {
     // 将路由收集的id传入设置查找信息的方法
-    currentfootBallInfo.value = getGroundInfoById(parseInt(options.id));
+		const beforeCurrentfootBallInfo = app.globalData.markers.find(i=>i.id===parseInt(options.id))
+    currentfootBallInfo.value = {
+			...beforeCurrentfootBallInfo,
+			imgUrl: 'https://img.qtx.com/asset/ec/7a/63/0a3f99a3392ea8e3cb7a9d151bf92928.jpeg',
+			startTime:beforeCurrentfootBallInfo.start_time,
+			endTime:beforeCurrentfootBallInfo.end_time,
+			isPark:beforeCurrentfootBallInfo.is_parking,
+			isToilet:beforeCurrentfootBallInfo.is_toilet,
+			isLight:beforeCurrentfootBallInfo.is_light
+		}
     console.log(currentfootBallInfo.value);
   });
 </script>
