@@ -1,10 +1,16 @@
 <script setup>
-  import { contactQuestion } from '../../pages-data/index.js';
+  import { onLoad } from '@dcloudio/uni-app';
+	import { ref } from 'vue';
+  // import { contactQuestion } from '../../pages-data/index.js';
+  import api from '@/api';
+
+	const app = getApp()
+	const contactQuestion = ref([])
 
   // 每个常见问题，绑定不同的事件
   const handleItem = item => {
     uni.navigateTo({
-    	url:`/pages/question/question?type=${item.type}&title=${item.name}`
+      url: `/pages/question/question?id=${item.id}&title=${item.name}`,
     });
   };
 
@@ -12,6 +18,49 @@
   const handleContact = () => {
     alert('H5页面触发');
   };
+	
+  onLoad(options => {
+    api.getQuestionList().then((res)=>{
+			
+			if(res.data.code !== 0){
+				uni.showToast({
+					title:res.data.message,
+					icon:'none'
+				})
+				return
+			}
+			app.globalData.questionList = contactQuestion.value = res.data.data.map((item)=>{
+				let src = '';
+				switch (item.id){
+					case 1:
+						src = "/static/flow.png"
+						break;
+					case 2:
+						src = "/static/machine.png"
+						break
+					case 3:
+						src = "/static/deposit.png"
+						break
+					case 4:
+						src = "/static/order.png"
+						break
+					case 5:
+						src = "/static/repair.png"
+						break
+					case 6:
+						src = "/static/more.png"
+						break
+					default:
+						break;
+				}
+				
+				return {
+					...item,
+					src
+				}
+			});
+		});
+	});
 </script>
 
 <template>

@@ -1,13 +1,18 @@
 <script setup>
   import { onLoad } from '@dcloudio/uni-app';
   import { ref } from 'vue';
-
-  import { getContactQuestionByType } from '../../pages-data/index.js';
-
+  // import { getContactQuestionByType } from '../../pages-data/index.js';
   const questionList = ref([]);
+	const app = getApp()
 
   onLoad(options => {
-    questionList.value = getContactQuestionByType(parseInt(options.type));
+    console.log(options);
+    // questionList.value = getContactQuestionByType(parseInt(options.id));
+		if(options.id){
+			const tempList = app.globalData.questionList.find(item => item.id === parseInt(options.id))
+			questionList.value = tempList.detail
+			console.log(questionList.value)
+		}
     uni.setNavigationBarTitle({
       title: options.title,
     });
@@ -21,7 +26,7 @@
         v-for="(item, index) in questionList"
         :key="item.id">
         <view class="question-title">{{ index + 1 }}. {{ item.title }}</view>
-        <view class="question-content">{{ item.desc }}</view>
+        <view class="question-content">{{ item.answer }}</view>
       </view>
     </view>
   </view>

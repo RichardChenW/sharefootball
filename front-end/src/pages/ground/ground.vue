@@ -10,10 +10,10 @@
   const handleNavTo = () => {
 		console.log(currentfootBallInfo.value)
     uni.openLocation({
-    	latitude:currentfootBallInfo.value.marker.latitude,
-			longitude:currentfootBallInfo.value.marker.longitude,
-			name:currentfootBallInfo.value.marker.title,
-			address:currentfootBallInfo.value.marker.address,
+    	latitude:currentfootBallInfo.value.latitude,
+			longitude:currentfootBallInfo.value.longitude,
+			name:currentfootBallInfo.value.title,
+			address:currentfootBallInfo.value.address,
 			success(res){
 				console.log(res)
 			},

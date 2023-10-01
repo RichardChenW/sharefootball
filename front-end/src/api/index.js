@@ -1,5 +1,7 @@
-import stadiumApi from '@/api/stadium.js';
+import stadium from '@/api/stadium.js';
+import question from '@/api/question.js'
 
 export default {
-	...stadiumApi
+	...stadium,
+	...question
 }

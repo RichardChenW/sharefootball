@@ -1,7 +1,8 @@
 <script>
   export default {
 		globalData:{
-			markers:[]
+			markers:[],
+			questionList:[]
 		},
     onLaunch: function () {
       console.log('App Launch');
