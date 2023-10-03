@@ -1,9 +1,12 @@
 <script>
   export default {
-		globalData:{
-			markers:[],
-			questionList:[]
-		},
+    globalData: {
+      markers: [],
+      questionList: [],
+      token: uni.getStorageSync('token') || null,
+      // 用户信息的初始值
+      userInfo: uni.getStorageSync('userInfo') || { name: '', avatar: '', amount: '' },
+    },
     onLaunch: function () {
       console.log('App Launch');
     },

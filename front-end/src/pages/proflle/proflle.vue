@@ -1,7 +1,6 @@
 <script setup>
   import { onLoad } from '@dcloudio/uni-app';
   import { ref } from 'vue';
-  const isLogin = ref(false);
   const itemlist = [
     {
       id: 1,
@@ -84,27 +83,28 @@
       url: '/pages/login/login',
     });
   };
-  onLoad(options => {});
+	const app = getApp();
+	const avatarUrl = ref(app.globalData.userInfo.avatar);
+	const handleModifyAvatar = ()=>{
+		uni.navigateTo({
+			url:'/pages/login/login?from=profile'
+		})
+	}
 </script>
 
 <template>
   <view class="root-container">
     <view class="profile-box">
       <view class="profile-top">
-        <button
-          type="primary"
-          v-if="!isLogin"
-          @click="handleLogin"
-          >点击登录</button
-        >
         <view
-          class="profile-info"
-          v-if="isLogin">
+          class="profile-info">
           <image
-            src="/static/logo.png"
+            :src="avatarUrl"
             mode="widthFix"
-            class="user-avatar"></image>
-          <view class="user-name">姓名</view>
+            class="user-avatar"
+						@click="handleModifyAvatar"
+					></image>
+          <view class="user-name">{{app.globalData.userInfo.name || '未显示'}}</view>
         </view>
       </view>
       <view class="profile-bottom">

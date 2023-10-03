@@ -3,7 +3,7 @@ const uploadService = require('../service/upload.service');
 const userService = require('../service/user.service');
 
 class UploadController {
-	async avatar(ctx) {
+	async avatar(ctx,next) {
 		const { filename, mimetype, size } = ctx.avatarInfo;
 		const { id: userId } = ctx.userInfo;
 		const res = await uploadService.insertAvatarFile(
@@ -14,9 +14,10 @@ class UploadController {
 		);
     // 如果更新上传成功，更新用户的头像,要拼接成一个静态地址
     if(res.insertId){
-      userService.updateUserAvayar(`${APP_HOST}:${APP_PORT}/file/avatar/${filename}`,userId)
+      userService.updateUserAvayar(`http://${APP_HOST}:${APP_PORT}/file/avatar/${filename}`,userId)
     }
 		ctx.body = res;
+    await next()
 	}
 }
 

@@ -55,6 +55,21 @@
         mapContext.moveToLocation();
         break;
       case '个人中心':
+				// 如果没有token禁止登录
+				if(!app.globalData.token){
+					uni.showModal({
+						title:'尚未登录',
+						content:'点击确认进行登录',
+						success(res){
+							if(res.confirm){
+								uni.navigateTo({
+									url:'/pages/login/login'
+								})
+							}
+						}
+					})
+					return
+				}
         uni.navigateTo({
         	url:"/pages/proflle/proflle"
         })
