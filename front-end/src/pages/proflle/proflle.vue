@@ -1,6 +1,7 @@
 <script setup>
-  import { onLoad } from '@dcloudio/uni-app';
+  import { onPullDownRefresh } from '@dcloudio/uni-app';
   import { ref } from 'vue';
+
   const itemlist = [
     {
       id: 1,
@@ -83,28 +84,33 @@
       url: '/pages/login/login',
     });
   };
-	const app = getApp();
-	const avatarUrl = ref(app.globalData.userInfo.avatar);
-	const handleModifyAvatar = ()=>{
-		uni.navigateTo({
-			url:'/pages/login/login?from=profile'
+  const app = getApp();
+  const avatarUrl = ref(app.globalData.userInfo.avatar);
+  const handleModifyAvatar = () => {
+    uni.navigateTo({
+      url: '/pages/login/login?from=profile',
+    });
+  };
+
+  onPullDownRefresh(() => {
+		uni.reLaunch({
+			url: '/pages/profile/profile'
 		})
-	}
+    uni.stopPullDownRefresh();
+  });
 </script>
 
 <template>
   <view class="root-container">
     <view class="profile-box">
       <view class="profile-top">
-        <view
-          class="profile-info">
+        <view class="profile-info">
           <image
             :src="avatarUrl"
             mode="widthFix"
             class="user-avatar"
-						@click="handleModifyAvatar"
-					></image>
-          <view class="user-name">{{app.globalData.userInfo.name || '未显示'}}</view>
+            @click="handleModifyAvatar"></image>
+          <view class="user-name">{{ app.globalData.userInfo.name || '未显示' }}</view>
         </view>
       </view>
       <view class="profile-bottom">

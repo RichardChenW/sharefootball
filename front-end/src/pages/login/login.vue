@@ -1,4 +1,6 @@
 <script setup>
+  import { onPullDownRefresh } from '@dcloudio/uni-app';
+
   import { onLoad } from '@dcloudio/uni-app';
   import { ref } from 'vue';
   import api from '@/api';
@@ -104,18 +106,24 @@
           title: '修改成功',
           icon: 'none',
         });
-        // 重新post一次数据
-        // const data = {
-        //   name: nickName.value,
-        //   password: password.value,
-        // };
-        // console.log(data);
-        // api.login(data).then(res => {
-        //   app.globalData.userInfo = res.data.data;
-        // });
-        uni.redirectTo({
-          url: '/pages/proflle/proflle',
+        // 更新此时的userInfo
+        api.getUserInfoByToken(headers).then(res => {
+          if (res.data.code == 0) {
+            app.globalData.userInfo = res.data.data;
+            uni.setStorage({
+              key: 'userInfo',
+              data: res.data.data,
+            });
+            uni.reLaunch({
+              url: '/pages/proflle/proflle',
+            });
+          } else {
+            uni.showToast({
+              title: '修改出现了点问题！',
+            });
+          }
         });
+
         return;
       } else {
         uni.showToast({
@@ -135,6 +143,7 @@
       });
     }
   });
+
 </script>
 
 <template>
@@ -166,7 +175,7 @@
       <input
         class="login-input"
         placeholder="请输入您的密码"
-        type="safe-password"
+        type="password"
         @change="handlePassword" />
     </view>
     <view

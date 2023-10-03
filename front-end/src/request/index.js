@@ -2,12 +2,13 @@ class Request {
 	constructor(domain) {
 		this.domain = domain
 	}
-	request(path, data, method) {
+	request(path, data, method, header) {
 		return new Promise((resolve, reject) => {
 			uni.request({
 				url: `${this.domain}${path}`,
 				method,
 				data,
+				header,
 				timeout: 6000,
 				success(res) {
 					resolve(res)
@@ -18,11 +19,11 @@ class Request {
 			})
 		})
 	}
-	get(path, data) {
-		return this.request(path, data, 'GET')
+	get(path, data, header) {
+		return this.request(path, data, 'GET', header)
 	}
-	post(path, data) {
-		return this.request(path, data, 'POST')
+	post(path, data, header) {
+		return this.request(path, data, 'POST', header)
 	}
 }
 
