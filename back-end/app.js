@@ -18,12 +18,15 @@ const uploadRouter = require('./router/upload.router');
 const fileRouter = require('./router/file.router');
 const updateRouter = require('./router/update.router');
 const { wrapperMiddleware } = require('./middleware/wrapper.middleware');
+// 解决跨域
+const cors = require('@koa/cors');
 
 const app = new Koa();
 
 app.use(bodyParser());
 app.use(staticServer('static'));
 app.use(logger());
+app.use(cors());
 app.on('error', errorHandler);
 
 // 注册获取场馆信息路由
