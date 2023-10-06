@@ -1,3 +1,5 @@
+const app = getApp();
+
 class Request {
 	constructor(domain) {
 		this.domain = domain

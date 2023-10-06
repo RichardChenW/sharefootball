@@ -1,11 +1,41 @@
 <script setup>
   import { ref } from 'vue';
-  
-	const cdk = ref(null);
-	
-	const handleCdk = ()=>{
-		console.log(cdk.value)
-	}
+  import api from '@/api';
+
+  const app = getApp();
+  const cdk = ref('');
+
+  const handleCdk = () => {
+    if (!cdk.value) {
+      uni.showToast({
+        title: '请填写cdk',
+				icon:'none'
+      });
+			return
+    }
+    const header = {
+      authorization: `Bearer ${app.globalData.token}`,
+    };
+    const data = {
+      cdkCode: cdk.value,
+    };
+    console.log(data);
+    api.cdkeyExchange(data, header).then(res => {
+      if (res.data.code === -1) {
+        uni.showToast({
+          title: res.data.message,
+          mask: true,
+          icon: 'none',
+        });
+        return;
+      }
+      uni.showToast({
+        title: '兑换成功',
+        mask: true,
+        icon: 'none',
+      });
+    });
+  };
 </script>
 
 <template>
@@ -14,9 +44,7 @@
       <input
         type="number"
         placeholder="请输入您的cdk"
-        :maxlength="10" 
-				v-model.lazy="cdk"
-				/>
+        v-model.lazy="cdk" />
     </view>
     <button
       @click="handleCdk"

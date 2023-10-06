@@ -10,16 +10,17 @@ const verifyCdkey = async (ctx, next) => {
 	if (!cdkCode) {
 		ctx.app.emit('error', new Error(CDK_IS_REQUIRED), ctx);
 	}
-	const [cdkRes] = await cdkService.getCdkeyInfoByCdkey(cdkCode);
+	const cdkRes = await cdkService.getCdkeyInfoByCdkey(cdkCode);
 	if (!cdkRes.length) {
 		ctx.app.emit('error', new Error(CDK_IS_INVALID), ctx);
+		return;
 	}
 	if (!cdkRes.status) {
 		ctx.app.emit('error', new Error(CDK_IS_EXPIRED), ctx);
-    return
+		return;
 	}
 	ctx.cdkInfo = cdkRes;
-  await next();
+	await next();
 };
 
 module.exports = { verifyCdkey };

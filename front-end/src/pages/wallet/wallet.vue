@@ -2,6 +2,7 @@
   import { onLoad } from '@dcloudio/uni-app';
   import { ref } from 'vue';
   const name = ref('richard');
+	const app = getApp();
   onLoad(options => {});
 </script>
 
@@ -11,7 +12,7 @@
 		<view class="wallet-title">我的钱包</view>
 		<view class="wallet-amount">
 			<text>$</text>
-			<text>100.00</text>
+			<text>{{app.globalData.userInfo.amount}}</text>
 		</view>
 		<button class="my-button">立即充值</button>
 	</view>

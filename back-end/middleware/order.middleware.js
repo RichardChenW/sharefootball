@@ -15,7 +15,7 @@ const verifyOrderCreate = async (ctx, next) => {
 		ctx.app.emit('error', new Error(STADIUMID_IS_REQUIRED), ctx);
 		return;
 	}
-	const status = Math.round(Math.random());
+	const status = 1;
 	const orderNumber = orderNumberGenerator();
 	ctx.orderInfo = {
 		stadiumId,

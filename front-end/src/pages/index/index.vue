@@ -2,14 +2,18 @@
   import { ref } from 'vue';
   import { onLoad } from '@dcloudio/uni-app';
   // import { markers } from '../../pages-data';
-	// 导入统一的api
-	import api from "@/api";
-	// 测试新的markers
-	const markers = ref([])
+  // 导入统一的api
+  import api from '@/api';
+  // 测试新的markers
+  const markers = ref([]);
   const userLongitude = ref(0);
   const userLatitude = ref(0);
   const currentMarker = ref(null);
   const isScan = ref(true);
+  const app = getApp();
+  // 查看是否有存在的订单
+  const orderNo = ref(uni.getStorageSync('orderNo'));
+
   // 功能界面
   const actionList = ref([
     {
@@ -33,7 +37,6 @@
       name: '个人中心',
     },
   ]);
-	const app = getApp();
   const handleAction = item => {
     switch (item.name) {
       case '地图搜索':
@@ -47,32 +50,32 @@
         break;
       case '客服中心':
         uni.navigateTo({
-        	url:"/pages/contact/contact"
-        })
+          url: '/pages/contact/contact',
+        });
         break;
       case '回到原点':
         const mapContext = uni.createMapContext('map');
         mapContext.moveToLocation();
         break;
       case '个人中心':
-				// 如果没有token禁止登录
-				if(!app.globalData.token){
-					uni.showModal({
-						title:'尚未登录',
-						content:'点击确认进行登录',
-						success(res){
-							if(res.confirm){
-								uni.navigateTo({
-									url:'/pages/login/login'
-								})
-							}
-						}
-					})
-					return
-				}
+        // 如果没有token禁止登录
+        if (!app.globalData.token) {
+          uni.showModal({
+            title: '尚未登录',
+            content: '点击确认进行登录',
+            success(res) {
+              if (res.confirm) {
+                uni.navigateTo({
+                  url: '/pages/login/login',
+                });
+              }
+            },
+          });
+          return;
+        }
         uni.navigateTo({
-        	url:"/pages/proflle/proflle"
-        })
+          url: '/pages/proflle/proflle',
+        });
         break;
     }
   };
@@ -90,9 +93,77 @@
 
   // 扫码事件
   const handleScan = () => {
+    if (!app.globalData.token) {
+      uni.showModal({
+        title: '尚未登录',
+        content: '点击确认进行登录',
+        success(res) {
+          if (res.confirm) {
+            uni.navigateTo({
+              url: '/pages/login/login',
+            });
+          }
+        },
+      });
+      return;
+    }
+
     uni.scanCode({
       success(res) {
-        console.log(res);
+        const stadiumId = res.result.split('=')[1];
+        const header = { authorization: `Bearer ${app.globalData.token}` };
+        if (!orderNo.value) {
+          //创建订单
+          const data = { stadiumId: stadiumId };
+          api.createOrder(data, header).then(res => {
+            if (res.data.code === -1) {
+              uni.showToast({
+                title: '创建失败1',
+                mask: true,
+                icon: 'none',
+              });
+              return;
+            }
+            if (!res.data.data.orderNumber) {
+              uni.showToast({
+                title: '创建失败2',
+                mask: true,
+                icon: 'none',
+              });
+              return;
+            }
+            uni.setStorageSync('orderNo', res.data.data.orderNumber);
+            // 内部的数据也要更新一次
+            orderNo.value = res.data.data.orderNumber;
+            uni.showToast({
+              title: '创建成功',
+              mask: true,
+              icon: 'none',
+            });
+          });
+        } else {
+          // 结束订单
+          const data = { orderNumber: orderNo.value };
+          api.finishOrder(data, header).then(res => {
+            if (res.data.code === -1) {
+              return uni.showToast({
+                title: `订单异常，未结束`,
+                mask: true,
+                icon: 'none',
+              });
+            }
+            uni.removeStorageSync('orderNo');
+						// orderNo.value = "";
+            uni.showToast({
+              title: '订单结束成功',
+              mask: true,
+              icon: 'none',
+            });
+          });
+        }
+      },
+      fail(err) {
+        console.log(err);
       },
     });
   };
@@ -106,10 +177,10 @@
   // 点击去场馆
   const handleNav = () => {
     uni.navigateTo({
-    	url:`/pages/ground/ground?id=${currentMarker.value.id}`
-    })
+      url: `/pages/ground/ground?id=${currentMarker.value.id}`,
+    });
   };
-	
+
   onLoad(() => {
     console.log('执行onLoad!');
     // 获取用户坐标
@@ -123,21 +194,21 @@
         console.log(err);
       },
     });
-		api.getStadiumList().then((res)=>{
-			if(res.data.code ===0){
-				app.globalData.markers = markers.value = res.data.data.map((item)=>{
-					return {
-						...item,
-						title:item.name,
-						width:40,
-						height:40,
-						latitude:parseFloat(item.latitude),
-						longitude:parseFloat(item.longitude),
-						iconPath: "/static/icon.png",
-					}
-				})
-			}
-		})
+    api.getStadiumList().then(res => {
+      if (res.data.code === 0) {
+        app.globalData.markers = markers.value = res.data.data.map(item => {
+          return {
+            ...item,
+            title: item.name,
+            width: 40,
+            height: 40,
+            latitude: parseFloat(item.latitude),
+            longitude: parseFloat(item.longitude),
+            iconPath: '/static/icon.png',
+          };
+        });
+      }
+    });
   });
 </script>
 

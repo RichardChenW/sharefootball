@@ -1,5 +1,6 @@
 <script setup>
   import { ref } from 'vue';
+  import api from '@/api';
 
   const amountList = [
     { id: 1, amount: 10 },
@@ -7,28 +8,53 @@
     { id: 3, amount: 50 },
     { id: 4, amount: 100 },
   ];
+  const app = getApp();
   const activeIndex = ref(1);
-  const handleactiveIndex = item => {
+  const handleactiveIndex = async item => {
     activeIndex.value = item.id;
-		const { amount: selectAmount } = amountList.find(each => {
-		  return each.id === activeIndex.value;
-		});
-		uni.showToast({
-		  title: `当前充值金额${selectAmount}元`,
-		  mask: true,
-		  icon: 'none',
-		});
-  };
-  const handleRecharge = () => {
     const { amount: selectAmount } = amountList.find(each => {
       return each.id === activeIndex.value;
     });
+    uni.showToast({
+      title: `当前选择充值金额${selectAmount}元`,
+      mask: true,
+      icon: 'none',
+    });
+  };
+  const handleRecharge = async () => {
+    const { amount: selectAmount } = amountList.find(each => {
+      return each.id === activeIndex.value;
+    });
+    try {
+      const headers = {
+        authorization: `Bearer ${app.globalData.token}`,
+      };
+      const res = await api.recharge({ amount: selectAmount }, headers);
+      if (res.data.code === -1) {
+        uni.showToast({
+          title: res.data.message,
+          mask: true,
+					icon:'none'
+        });
+        return;
+      }
+      uni.showToast({
+        title: `成功充值金额${selectAmount}元`,
+        mask: true,
+        icon: 'none',
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 </script>
 
 <template>
   <view class="recharge-box">
-    <view class="recharge-desc"> 当前账户余额:<text class="recharge-amount">100.00 </text>元 </view>
+    <view class="recharge-desc">
+      当前账户余额:<text class="recharge-amount">{{ app.globalData.userInfo.amount }}</text
+      >元
+    </view>
     <view class="recharge-amount-list">
       <view
         class="amount-item"

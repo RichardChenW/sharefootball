@@ -2,7 +2,7 @@ const orderService = require('../service/order.service');
 const userService = require('../service/user.service');
 
 class OrderController {
-	async create(ctx) {
+	async create(ctx, next) {
 		const { status, orderNumber, stadiumId } = ctx.orderInfo;
 		const { id: userId } = ctx.userInfo;
 		const orderInfo = [status, orderNumber, userId, stadiumId, status ? 15 : 0]; //status, orderNo, userId, stadiumId, amount
@@ -22,8 +22,9 @@ class OrderController {
 			msg: '订单创建成功',
 			orderNumber,
 		};
+		await next();
 	}
-	async finish(ctx) {
+	async finish(ctx, next) {
 		const { order_number: orderNumber } = ctx.orderInfo;
 		const res = await orderService.finishOrder(orderNumber);
 		// 给用户扣钱
@@ -35,11 +36,13 @@ class OrderController {
 			);
 		}
 		ctx.body = '结束订单';
+		await next();
 	}
-	async list(ctx) {
+	async list(ctx, next) {
 		const { id: userId } = ctx.userInfo;
 		const res = await orderService.getList(userId);
 		ctx.body = res;
+		await next();
 	}
 }
 module.exports = new OrderController();
