@@ -79,11 +79,6 @@
         });
     }
   };
-  const handleLogin = () => {
-    uni.navigateTo({
-      url: '/pages/login/login',
-    });
-  };
   const app = getApp();
   const avatarUrl = ref(app.globalData.userInfo.avatar);
   const handleModifyAvatar = () => {

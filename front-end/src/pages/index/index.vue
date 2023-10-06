@@ -171,7 +171,7 @@
   // 点击非marker的区域，展示借还
   const handleIsScan = () => {
     console.log('触发事件');
-    isScan.value = false;
+    isScan.value = true;
   };
 
   // 点击去场馆

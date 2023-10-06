@@ -3,6 +3,11 @@
   import { ref } from 'vue';
   const name = ref('richard');
 	const app = getApp();
+	const handleRecharge = ()=>{
+		uni.navigateTo({
+			url:"/pages/recharge/recharge"
+		})
+	}
   onLoad(options => {});
 </script>
 
@@ -14,7 +19,7 @@
 			<text>$</text>
 			<text>{{app.globalData.userInfo.amount}}</text>
 		</view>
-		<button class="my-button">立即充值</button>
+		<button class="my-button" @click= "handleRecharge">立即充值</button>
 	</view>
 </template>
 

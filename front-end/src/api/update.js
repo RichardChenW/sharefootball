@@ -2,6 +2,8 @@ import {
 	request
 } from "@/request";
 
-export const getUserInfoByToken = (header) => {
-	return request.post('/update/user', undefined, header)
+const app = getApp();
+
+export const getUserInfoByToken = () => {
+	return request.post('/update/user', undefined, {Authorization:app.globalData.token})
 }

@@ -2,7 +2,7 @@ const rechargeService = require('../service/recharge.service');
 const userService = require('../service/user.service');
 
 class RechargeController {
-	async recharge(ctx) {
+	async recharge(ctx,next) {
 		const { id: user_id } = ctx.userInfo;
 		const { amount, status, orderNo } = ctx.orderInfo;
 		// recharge表插入数据
@@ -14,6 +14,7 @@ class RechargeController {
 		);
 		if (!status) {
 			ctx.body = '充值失败！';
+      await next();
 			return;
 		}
 		// 更新充值金额
@@ -24,9 +25,8 @@ class RechargeController {
       afterAmount,
       user_id
     );
-	
-
 		ctx.body = '充值成功！';
+    await next();
 	}
 }
 

@@ -1,6 +1,8 @@
 <script setup>
   import { ref } from 'vue';
   import api from '@/api';
+	import { onPullDownRefresh } from '@dcloudio/uni-app';
+
 
   const amountList = [
     { id: 1, amount: 10 },
@@ -43,10 +45,20 @@
         mask: true,
         icon: 'none',
       });
+			// 更新页面
+			const {data:userInfo} = await api.getUserInfoByToken();
+			uni.setStorageSync('userInfo',userInfo.data)
+			app.globalData.userInfo = uni.getStorageSync('userInfo')
+			uni.reLaunch({
+			    url: '/pages/recharge/recharge'
+			});
     } catch (e) {
       console.log(e);
     }
   };
+	onPullDownRefresh(() => {
+	  uni.stopPullDownRefresh();
+	});
 </script>
 
 <template>

@@ -98,7 +98,6 @@
     const headers = {
       authorization: `Bearer ${app.globalData.token}`,
     };
-    console.log(headers);
     upload.uploadAvatar('/upload/avatar', 'avatar', userAvatarUrl.value, headers).then(res => {
       console.log(res);
       if (res.code === 0) {
@@ -107,7 +106,7 @@
           icon: 'none',
         });
         // 更新此时的userInfo
-        api.getUserInfoByToken(headers).then(res => {
+        api.getUserInfoByToken().then(res => {
           if (res.data.code == 0) {
             app.globalData.userInfo = res.data.data;
             uni.setStorage({
