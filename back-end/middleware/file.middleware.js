@@ -2,7 +2,6 @@ const fileService = require('../service/file.service');
 
 const verifyRead = async (ctx, next) => {
 	const { filename } = ctx.request.params;
-	console.log(filename);
 	const [fileInfo] = await fileService.getFileInfoByFileName(filename);
 	// if(!fileInfo.length){
   //   ctx.app.emit('error',new Error("file doesn't exsist!"),ctx)
