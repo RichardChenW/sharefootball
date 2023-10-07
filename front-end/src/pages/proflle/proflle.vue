@@ -86,6 +86,23 @@
       url: '/pages/login/login?from=profile',
     });
   };
+	const handleLogout = ()=>{
+		uni.showModal({
+			title:"确定退出吗？",
+			success(res){
+				if(res.confirm){
+					// 登出逻辑
+					uni.clearStorageSync()
+					app.globalData.token='';
+					app.globalData.userInfo='';
+					uni.reLaunch({
+						url:'/pages/login/login'
+					})
+				}
+			}
+		})
+	}
+
 
   onPullDownRefresh(() => {
 		uni.reLaunch({
@@ -125,6 +142,9 @@
         </view>
       </view>
     </view>
+		<view class="log-out-container">
+			<button @click="handleLogout">退出登录</button>
+		</view>
   </view>
 </template>
 
@@ -202,5 +222,14 @@
         }
       }
     }
+		.log-out-container{
+			width: 90%;
+			margin: 50rpx auto;
+			button {
+				background-color: #ff5500;
+				font-weight: 700;
+				font-size: 40rpx;
+			}
+		}
   }
 </style>
