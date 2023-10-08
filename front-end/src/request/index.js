@@ -30,4 +30,4 @@ class Request {
 }
 
 // export const request = new Request('http://localhost:8080')
-export const request = new Request('http://192.168.31.245:8080')
+export const request = new Request('http://8.134.152.216:8080')
