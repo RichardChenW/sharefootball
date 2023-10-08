@@ -2,12 +2,12 @@ const connection = require('../sql');
 
 class UserService {
 	async getUserInfoByname(userName) {
-		const statment = 'SELECT * FROM USER WHERE `name` = ?';
+		const statment = 'SELECT * FROM `user` WHERE `name` = ?';
 		const [res] = await connection.execute(statment, [userName]);
 		return res;
 	}
 	async getUserInfoById(id) {
-		const statment = 'SELECT * FROM USER WHERE `id` = ?';
+		const statment = 'SELECT * FROM `user` WHERE `id` = ?';
 		const [res] = await connection.execute(statment, [id]);
 		return res;
 	}
