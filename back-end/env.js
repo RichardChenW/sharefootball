@@ -1,11 +1,11 @@
 const fs = require('fs');
-const APP_HOST = '192.168.31.245';
+const APP_HOST = 'localhost';
 const APP_PORT = 8080;
 const DATABASE_SETTING = {
-	HOST: 'localhost',
+	HOST: '8.134.152.216',
 	PORT: 3306,
 	USER: 'root',
-	PASSWORD: '123456',
+	PASSWORD: 'Cw94618!',
 	DATABASE: 'share_football',
 };
 

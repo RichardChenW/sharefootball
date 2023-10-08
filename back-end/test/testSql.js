@@ -1,10 +1,6 @@
-const questionService = require('../service/question.service');
+const stadiumService = require("../service/stadium.service");
 
-const testSql = async () => {
-	const res = await questionService.list();
+(async () => {
+	const res = await stadiumService.list();
 	console.log(res);
-};
-
-testSql().then(() => {
-	process.exit();
-});
+})();

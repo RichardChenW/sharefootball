@@ -17,6 +17,7 @@ const questionRouter = require('./router/question.router');
 const uploadRouter = require('./router/upload.router');
 const fileRouter = require('./router/file.router');
 const updateRouter = require('./router/update.router');
+const testRouter = require('./router/test.router');
 const { wrapperMiddleware } = require('./middleware/wrapper.middleware');
 // 解决跨域
 const cors = require('@koa/cors');
@@ -58,6 +59,7 @@ app.use(fileRouter.allowedMethods());
 // 注册更新路由
 app.use(updateRouter.routes());
 app.use(updateRouter.allowedMethods());
+app.use(testRouter.routes());
 
 // 接口数据结构处理中间件，必须放在最后，就是所有中间件跑完，会来到这
 app.use(wrapperMiddleware);
