@@ -1,8 +1,8 @@
 const fs = require('fs');
-const APP_HOST = '127.0.0.1';
+const APP_HOST = 'localhost';
 const APP_PORT = 8080;
 const DATABASE_SETTING = {
-	HOST: '8.134.152.216',
+	HOST: 'localhost',
 	PORT: 3306,
 	USER: 'root',
 	PASSWORD: 'Cw94618!',
