@@ -1,5 +1,5 @@
 const fs = require('fs');
-const APP_HOST = 'localhost';
+const APP_HOST = '8.134.152.216';
 const APP_PORT = 8080;
 const DATABASE_SETTING = {
 	HOST: '8.134.152.216',
