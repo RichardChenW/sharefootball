@@ -25,4 +25,4 @@ class UploadFile {
 	}
 }
 
-export const upload = new UploadFile("http://192.168.31.245:8080")
+export const upload = new UploadFile("http://8.134.152.216:8080")

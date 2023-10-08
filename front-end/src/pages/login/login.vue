@@ -1,6 +1,4 @@
 <script setup>
-  import { onPullDownRefresh } from '@dcloudio/uni-app';
-
   import { onLoad } from '@dcloudio/uni-app';
   import { ref } from 'vue';
   import api from '@/api';
@@ -98,8 +96,9 @@
     const headers = {
       authorization: `Bearer ${app.globalData.token}`,
     };
+		
     upload.uploadAvatar('/upload/avatar', 'avatar', userAvatarUrl.value, headers).then(res => {
-      console.log(res);
+			console.log(res);
       if (res.code === 0) {
         uni.showToast({
           title: '修改成功',
@@ -122,7 +121,6 @@
             });
           }
         });
-
         return;
       } else {
         uni.showToast({
